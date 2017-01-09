@@ -9,4 +9,20 @@ describe('Deleting a user', () => {
 		joe.save()
 			.then(() => done());
 	});
+
+	it('model instance remove', () => {
+
+	});
+
+	it('class metho remove', () => {
+
+	});
+
+	it('class method findAndRemove', () => {
+
+	});
+
+	it('class method findByIdAndRemove', () => {
+
+	});
 });
