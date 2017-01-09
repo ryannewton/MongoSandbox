@@ -1,3 +1,3 @@
-# LearningMongo
+# MongoSandbox
 
-This is a project I'm creating to get more familiar with MongoDB and Mongoose.
+This is a project I use to experiment with Mongo and Mongoose.
