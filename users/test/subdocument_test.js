@@ -35,4 +35,25 @@ describe('Subdocuments', () => {
 				done();
 			});
 	});
+
+	it('can remove an existing subdocument', (done) => {
+		const joe = new User({
+			name: 'Joe',
+			posts: [{title: 'New Title'}]
+		});
+
+		joe.save()
+			.then(() => User.findOne({name: 'Joe'}))
+			.then((user) => {
+				// Note: Mongoose's remove() allows removing elements from an array
+				user.posts[0].remove();
+				// However, using remove() on a subdocument does not automatically save to the database
+				return user.save();
+			})
+			.then(() => User.findOne({name: 'Joe'}))
+			.then((user) => {
+				assert(user.posts.length === 0);
+				done();
+			});
+	});
 });
