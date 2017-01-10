@@ -46,4 +46,12 @@ describe('Updating records', () => {
 			done
 		);
 	});
+
+	it('A model class can find a record with an Id and update', (done) => {
+		// Update using the class function findByIdAndUpdate()
+		assertName(
+			User.findByIdAndUpdate(joe._id, { name: 'Alex' }),
+			done
+		);
+	});
 });
