@@ -3,6 +3,7 @@ const User = require('../src/user');
 
 describe('Validating records', () => {
 	it('requires a user\'s name', () => {
+		// By default name would be undefined. This is specified for clearity
 		const user = new User({ name: undefined });
 		// Note: validateSync() is a synchronous version of validate()
 		// Since this doesn't access a DB, no need for using asynchronous code
