@@ -11,6 +11,7 @@ describe('Deleting a user', () => {
 	});
 
 	it('model instance remove', (done) => {
+		// Remove a specific instance
 		joe.remove()
 			.then(() => User.findOne({ name: 'Joe' }))
 			.then((user) => {
@@ -19,8 +20,14 @@ describe('Deleting a user', () => {
 			});
 	});
 
-	it('class method remove', () => {
-
+	it('class method remove', (done) => {
+		// Remove all records with the given criteria
+		User.remove({ name: 'Joe' })
+			.then(() => User.findOne({ name: 'Joe' }))
+			.then((user) => {
+				assert(user === null);
+				done();
+			});
 	});
 
 	it('class method findAndRemove', () => {
