@@ -30,4 +30,11 @@ describe('Updating records', () => {
 		// Update a value directly
 		assertName(joe.update({ name: 'Alex' }), done);
 	});
+
+	it('A model class can update', (done) => {
+		assertName(
+			User.update({ name: 'Joe' }, { name: 'Alex' }),
+			done
+		);
+	});
 });
