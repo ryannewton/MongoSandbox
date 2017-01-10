@@ -25,4 +25,9 @@ describe('Updating records', () => {
 		joe.set('name', 'Alex');
 		assertName(joe.save(), done);
 	});
+
+	it('A model instance can update', (done) => {
+		// Update a value directly
+		assertName(joe.update({ name: 'Alex' }), done);
+	});
 });
