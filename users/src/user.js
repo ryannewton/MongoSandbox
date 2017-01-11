@@ -20,7 +20,21 @@ const UserSchema = new Schema({
 });
 
 UserSchema.virtual('postCount').get(function() {
+	// Note: using function() instead of () => so that this behaves as we expect
 	return this.posts.length;
+});
+
+UserSchema.pre('remove', function(next) {
+	// Note: using function() instead of () => so that this behaves as we expect
+
+	// Pulls BlogPost off of mongoose.model instead of require() to avoid
+	//  a cyclical loading situation, which could happen if we later require() User in BlogPost
+	// This avoids the issue since this function will be loaded after the app first loads
+	const BlogPost = mongoose.model('blogPost');
+
+	// remove()'s all BlogPost instances that $INclude an _id matching any in this.blogPosts
+	BlogPost.remove({ _id: { $in: this.blogPosts }})
+		.then(() => next());
 });
 
 const User = mongoose.model('user', UserSchema);
