@@ -11,7 +11,7 @@ const Artist = require('../models/artist');
 module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
 
 	const query = Artist
-		.find({})
+		.find(buildQuery(criteria))
 		.sort({ [sortProperty]: 1 })
 		.skip(offset)
 		.limit(limit);
@@ -25,4 +25,30 @@ module.exports = (criteria, sortProperty, offset = 0, limit = 20) => {
 				limit: limit
 			};
 		});
+};
+
+const buildQuery = (criteria) => {
+	const query = {};
+	if(criteria.name.length > 0) {
+		// Note: This assumes an index has been created for the name field
+		// To do this, open Mongo's command shell an type:
+		//  db.artists.createIndex({ name: "text" })
+		query.$text = { $search: criteria.name };
+	}
+
+	if(criteria.age) {
+		query.age = {
+			$gte: criteria.age.min,
+			$lte: criteria.age.max
+		}
+	}
+
+	if(criteria.yearsActive) {
+		query.yearsActive = {
+			$gte: criteria.yearsActive.min,
+			$lte: criteria.yearsActive.max
+		}
+	}
+
+	return query;
 };
