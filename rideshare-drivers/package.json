@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon --exec mocha --recursive -R min"
   },
   "author": "Ryan Newton",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.15.2"
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mocha": "^3.2.0",
+    "mongoose": "^4.7.6",
+    "supertest": "^2.0.1"
   }
 }
