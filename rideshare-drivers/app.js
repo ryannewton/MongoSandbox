@@ -12,4 +12,9 @@ if(false && process.env.NODE_ENV !== 'test') {
 app.use(bodyParser.json());
 routes(app);
 
+app.use((err, req, res, next) => {
+	// status 422 = unprocessable entity
+	res.status(422).send({ error: err.message });
+});
+
 module.exports = app;
