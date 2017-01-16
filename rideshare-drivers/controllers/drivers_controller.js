@@ -5,6 +5,20 @@ module.exports = {
 		res.send({ hi: 'there' })
 	},
 
+	index(req, res, next) {
+		// mywebsite.com/api/drivers?lng=120&lat=42
+		//  => query holds values after ?
+		const { lng, lat } = req.query;
+
+		Driver.geoNear(
+			{ type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
+			// Note: maxDistance uses meters
+			{ spherical: true, maxDistance: 200000 }
+		)
+			.then((drivers) => res.send(drivers))
+			.catch(next);
+	},
+
 	create(req, res, next) {
 		const driverProps = req.body;
 
