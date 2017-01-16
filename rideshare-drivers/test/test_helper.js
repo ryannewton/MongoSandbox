@@ -15,6 +15,9 @@ before((done) => {
 beforeEach((done) => {
 	const { drivers } = mongoose.connection.collections;
 	drivers.drop()
+		// Note: Mongo only creates special indexes when the schema loads, which we are dropping
+		//  after every test. The ensureIndex() function recreates the index every time
+		.then(() => drivers.ensureIndex({ 'geometry.coordinates': '2dsphere' }))
 		.then(() => done())
 		// First time the DB runs there will be no drivers collection, returning an
 		//  error when we call drop(). Need to still tell the test suite to continue
