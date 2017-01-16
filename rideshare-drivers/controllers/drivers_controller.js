@@ -21,5 +21,14 @@ module.exports = {
 			.then(() => Driver.findById({ _id: driverId }))
 			.then((driver) => res.send(driver))
 			.catch(next);
+	},
+
+	delete(req, res, next) {
+		const driverId = req.params.id;
+
+		Driver.findByIdAndRemove({ _id: driverId })
+			// 204 = record successfully deleted
+			.then((driver) => res.status(204).send(driver))
+			.catch(next);
 	}
 };
